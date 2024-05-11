@@ -1,0 +1,4 @@
+db:
+  host: "127.0.0.1"
+  name: localdb
+  user: DB_USER_ANALYSIS
