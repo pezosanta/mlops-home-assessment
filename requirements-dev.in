@@ -4,9 +4,6 @@ matplotlib
 numpy
 pyyaml
 
-# code quality checking related packages
-black
-flake8
-isort
-pre-commit
-pytest
+# python packaging related packages
+setuptools >= 69.0
+build >= 1.0.3
