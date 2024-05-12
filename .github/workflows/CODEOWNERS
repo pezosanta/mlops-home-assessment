@@ -1,0 +1,7 @@
+# This is the MLOps homa assessment codeowners file. People listed next to the folders are mandatory reviewers.
+# If there are multiple names, one of them has to approve and they are automatically added to relevant PRs by GitHub.
+# Order is important. The last matching pattern has the most precedence. Be careful not to break existing rules.
+# More info here: https://help.github.com/articles/about-codeowners/
+
+# Global rule
+* @pezosanta

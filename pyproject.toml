@@ -1,0 +1,32 @@
+[tool.black]
+line-length = 120
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+# Python packaging
+[build-system]
+requires = ["setuptools >= 69.0", "build >= 1.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "image-classifier"
+requires-python = "~= 3.10"
+version = "0.0.1"
+dependencies = []
+authors = [
+    {name = "Santa Peter", email = "private@email.com"}
+]
+maintainers = [
+    {name = "Santa Peter", email = "private@email.com"}
+]
+description = "MLOps home assesment - Image Classification Network"
+readme = "REAMDE.md"
+license = {text = "Mocked license"}
+keywords = ["MLOps", "mlops", "image classification"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["image_classifier*"]
