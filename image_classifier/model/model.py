@@ -22,4 +22,7 @@ class Net(nn.Module):
         return x
 
 
-net = Net()
+def get_model() -> nn.Module:
+    # Handling model structure based hyperparameters here (if there were any)
+
+    return Net()
