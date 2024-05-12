@@ -1,5 +1,19 @@
+import logging
+from pathlib import Path
+
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
+# Setting the logging level of other loggers to WARNING
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - [%(filename)s:%(lineno)d] - %(levelname)s - %(message)s",
+    encoding="utf-8",
+    level=logging.WARNING,
+    datefmt="%Y-%m-%d %H:%M:%S [%Z]",
+)
+logger = logging.getLogger("MODEL")
+logger.setLevel(logging.INFO)
 
 
 class Net(nn.Module):
@@ -24,5 +38,17 @@ class Net(nn.Module):
 
 def get_model() -> nn.Module:
     # Handling model structure based hyperparameters here (if there were any)
+    logger.info(msg="Composing and returning model.")
 
     return Net()
+
+
+def save_model(
+    model: Net, experiment_name: str, run_name: str, base_path: Path = Path(__file__).parents[2].joinpath("experiments")
+) -> None:
+
+    run_path = base_path.joinpath(f"{experiment_name}/{run_name}")
+    run_path.mkdir(parents=True, exist_ok=True)
+
+    logger.info(msg=f"Saving model to {str(run_path)}.")
+    torch.save(model.state_dict(), run_path.joinpath("model.pth"))
