@@ -4,6 +4,7 @@ on: [pull_request, push]
 
 jobs:
   pre-commit:
+    name: Code Quality checks with pre-commit
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout repository
@@ -15,5 +16,5 @@ jobs:
     - name: Installing code quality requirements
       run: |
         source requirements-cq.sh
-    - name: Code Quality checks with pre-commit
+    - name: Running Code Quality checks with pre-commit
       uses: pre-commit/action@v3.0.1
