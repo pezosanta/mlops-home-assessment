@@ -46,7 +46,7 @@ def get_train_test_data_loader(
     db_connect: object,
     batch_size: int = 4,
     num_workers: int = 2,
-    local_dataset_path: Path = Path(__file__).parent.joinpath("cifar_dataset"),
+    local_dataset_path: Path = Path(__file__).parents[2].joinpath("data/cifar_dataset"),
 ) -> tuple[DataLoader, DataLoader, list[str]]:
     """
     For the purpose of this exercice, this function is here to simulate a call to a database.

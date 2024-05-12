@@ -30,3 +30,6 @@ keywords = ["MLOps", "mlops", "image classification"]
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["image_classifier*"]
+
+[project.scripts]
+image_classifier_trainer = "image_classifier.main:main"

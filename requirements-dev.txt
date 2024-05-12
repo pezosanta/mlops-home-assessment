@@ -95,6 +95,8 @@ torch==2.3.0
     #   torchvision
 torchvision==0.18.0
     # via -r requirements-dev.in
+tqdm==4.66.4
+    # via -r requirements-dev.in
 triton==2.3.0
     # via torch
 typing-extensions==4.11.0

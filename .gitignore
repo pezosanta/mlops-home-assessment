@@ -1,6 +1,9 @@
 # virtualenv
 .venv/
 
+# pycache
+*.pyc
+
 # data
 data/cifar_dataset/
 
