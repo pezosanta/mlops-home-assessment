@@ -1,0 +1,5 @@
+# Contains a set of commands with glob-like pattern matching to include (or exclude) relevant files
+# that the default file location algorithm (pyproject.toml - setuptools) does not catch by default.
+# For more information, visit https://setuptools.pypa.io/en/latest/userguide/miscellaneous.html
+
+recursive-include image_classifier *.json *.yaml
