@@ -3,6 +3,7 @@ torchvision
 matplotlib
 numpy
 pyyaml
+tqdm
 
 # python packaging related packages
 setuptools >= 69.0
