@@ -23,7 +23,7 @@ on:
         default: 0.9
       num_epochs:
         type: number
-        default: 3
+        default: 2
       batch_size:
         type: number
         default: 4
@@ -54,7 +54,7 @@ jobs:
         image_classifier_trainer --experiments_folder experiments --experiment_name ${{ inputs.experiment_name }} --run_name ${{ inputs.run_name }}  
         --dataset_folder data/${{ inputs.dataset }} --learning_rate ${{ inputs.learning_rate }} --momentum ${{ inputs.momentum }}
         --num_epochs ${{ inputs.num_epochs }} --batch_size ${{ inputs.batch_size }} --pretrained_model ${{ inputs.pretrained_model }}
-        --db_pass ZA68eWqt8VWBTQwPBrpI
+        --db_pass ${{ secrets.DB_PASSWORD }}
     - name: Publish experiment results
       uses: actions/upload-artifact@v4
       with:
