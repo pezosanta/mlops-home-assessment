@@ -59,4 +59,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: experiment_results
-        path: experiments/github_actions_exp_test/run_1
+        path: experiments/${{ inputs.experiment_name }}/${{ inputs.run_name }}
