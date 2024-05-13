@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 # Setting the logging level of other loggers to WARNING
 logging.basicConfig(
@@ -13,7 +13,7 @@ logging.basicConfig(
     level=logging.WARNING,
     datefmt="%Y-%m-%d %H:%M:%S [%Z]",
 )
-logger = logging.getLogger("TRAIN")
+logger = logging.getLogger("TRAINING")
 logger.setLevel(logging.INFO)
 
 
