@@ -4,34 +4,44 @@ on:
   workflow_dispatch:
     inputs:
       experiment_name:
+        description: Experiment name of the current training run.
         type: string
         required: true
       run_name:
+        description: Run name (within <experiment_name>) to track the training/validation results.
         type: string
         required: true
       dataset:
+        description: Dataset to be used for training.
         type: choice
         default: cifar_dataset
         options:
           - cifar_dataset
         required: true
       learning_rate:
+        description: Learning Rate for the SGD optimizer.
         type: number
         default: 0.001
       momentum:
+        description: Momentum for the SGD optimizer.
         type: number
         default: 0.9
       num_epochs:
+        description: Number of epochs to train the model for.
+        type: number
+        default: 2
+      num_workers:
+        description: Number of workers (CPU threads/processes) to load the data with.
         type: number
         default: 2
       batch_size:
+        description: Epoch size to load the data with.
         type: number
         default: 4
       pretrained_model:
+        description: Path to the pretrained model weights (relative to <experiments_folder>) to use as initial weights in training.
         type: string
         default: "''"
-  pull_request:
-
 
 jobs:
   training:
