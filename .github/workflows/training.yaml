@@ -1,6 +1,37 @@
 name: Image Classifier Training
 
-on: [pull_request, workflow_dispatch]
+on: 
+  workflow_dispatch:
+    inputs:
+      experiment_name:
+        type: string
+        required: true
+      run_name:
+        type: string
+        required: true
+      dataset:
+        type: choice
+        default: cifar_dataset
+        options:
+          - cifar_dataset
+        required: true
+      learning_rate:
+        type: number
+        default: 0.001
+      momentum:
+        type: number
+        default: 0.9
+      num_epochs:
+        type: number
+        default: 3
+      batch_size:
+        type: number
+        default: 4
+      pretrained_model:
+        type: string
+        required: false
+  pull_request:
+
 
 jobs:
   training:
@@ -19,11 +50,13 @@ jobs:
       run: |
         source requirements-dev.sh
     - name: Running the Training (main) script
-      run: |
-        image_classifier_trainer --experiment_name github_actions_exp_test --run_name run_1 --db_pass ZA68eWqt8VWBTQwPBrpI
+      run: >
+        image_classifier_trainer --experiments_folder experiments --experiment_name ${{ inputs.experiment_name }} --run_name ${{ inputs.run_name }}  
+        --dataset_folder data/${{ inputs.dataset }} --learning_rate ${{ inputs.learning_rate }} --momentum ${{ inputs.momentum }}
+        --num_epochs ${{ inputs.num_epochs }} --batch_size ${{ inputs.batch_size }} --pretrained_model ${{ inputs.pretrained_model }}
+        --db_pass ZA68eWqt8VWBTQwPBrpI
     - name: Publish experiment results
       uses: actions/upload-artifact@v4
       with:
         name: experiment_results
         path: experiments/github_actions_exp_test/run_1
-        compression-level: 0
