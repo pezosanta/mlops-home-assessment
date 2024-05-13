@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit bash whenever an error occurs
-set -e
+set -ev
 
 workSpace=`dirname ${BASH_SOURCE[0]}`
 
