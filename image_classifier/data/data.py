@@ -53,6 +53,8 @@ def get_train_test_data_loader(
     You can keep it like that but keep in mind in a real situation, here you would have the code for db communication.
     """
 
+    logger.info(f"Loading Dataset from {local_dataset_path}.")
+
     def get_classes() -> list[str]:
         logger.info(msg="Getting dataset classes.")
 
