@@ -74,8 +74,3 @@ def get_train_test_data_loader(
     testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
 
     return trainloader, testloader, get_classes()
-
-
-if __name__ == "__main__":
-    trainloader, testloader, classes = get_train_test_data_loader(get_db_connect_object(db_pass="ZA68eWqt8VWBTQwPBrpI"))
-    print(classes)
