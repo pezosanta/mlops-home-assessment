@@ -1,4 +1,5 @@
 name: Image Classifier Training
+run-name: "Experiment: ${{ inputs.experiment_name }} / Run: ${{ inputs.run_name }}"
 
 on: 
   workflow_dispatch:
@@ -39,7 +40,9 @@ on:
         type: number
         default: 4
       pretrained_model:
-        description: Path to the pretrained model weights (relative to <experiments_folder>) to use as initial weights in training.
+        description: | 
+          Path to the pretrained model weights (relative to <experiments_folder>) to use as initial weights in training.
+          If you want a clean training, leave this with the double-quotation default value ('').
         type: string
         default: "''"
 
@@ -56,15 +59,26 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: "3.10"
-    - name: Installing code development requirements
+    - name: Install build dependencies
+      run: pip install setuptools>=69.0 build>=1.0.3
+    - name: Build Docker image
       run: |
-        source requirements-dev.sh
-    - name: Running the Training (main) script
+        source docker/build.sh
+    - name: Running the Training (main) script in Docker image
       run: >
-        image_classifier_trainer --experiments_folder experiments --experiment_name ${{ inputs.experiment_name }} --run_name ${{ inputs.run_name }}  
-        --dataset_folder data/${{ inputs.dataset }} --learning_rate ${{ inputs.learning_rate }} --momentum ${{ inputs.momentum }}
-        --num_epochs ${{ inputs.num_epochs }} --num_workers ${{ inputs.num_workers }} --batch_size ${{ inputs.batch_size }} 
-        --pretrained_model ${{ inputs.pretrained_model }} --db_pass ${{ secrets.DB_PASSWORD }}
+        source docker/configure.sh && 
+        docker run -v ${GITHUB_WORKSPACE}/experiments:/experiments -v ${GITHUB_WORKSPACE}/data/${{ inputs.dataset }}:/data $dockerImageTag 
+        image_classifier_trainer --experiments_folder /experiments 
+        --experiment_name ${{ inputs.experiment_name }} 
+        --run_name ${{ inputs.run_name }} 
+        --dataset_folder /data 
+        --learning_rate ${{ inputs.learning_rate }} 
+        --momentum ${{ inputs.momentum }} 
+        --num_epochs ${{ inputs.num_epochs }} 
+        --num_workers ${{ inputs.num_workers }} 
+        --batch_size ${{ inputs.batch_size }} 
+        --pretrained_model ${{ inputs.pretrained_model }} 
+        --db_pass ${{ secrets.DB_PASSWORD }}
     - name: Publish experiment results
       uses: actions/upload-artifact@v4
       with:

@@ -45,7 +45,6 @@ def get_model(
     model = Net()
 
     if pretrained_model_path:
-        print(pretrained_model_path)
         full_model_path = base_path.joinpath(pretrained_model_path)
 
         logger.info(msg=f"Loading pretrained model ({str(full_model_path)}).")
