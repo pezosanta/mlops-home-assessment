@@ -29,7 +29,7 @@ on:
         default: 4
       pretrained_model:
         type: string
-        default: ""
+        default: "''"
   pull_request:
 
 
