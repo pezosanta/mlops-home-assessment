@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit bash whenever an error occurs
-# set -e
+set -e
 
 workSpace=`dirname ${BASH_SOURCE[0]}`
 projectDir=$workSpace/../
