@@ -39,7 +39,9 @@ on:
         type: number
         default: 4
       pretrained_model:
-        description: Path to the pretrained model weights (relative to <experiments_folder>) to use as initial weights in training.
+        description: | 
+          Path to the pretrained model weights (relative to <experiments_folder>) to use as initial weights in training.
+          If you want a clean training, leave this with the double-quotation default value ('').
         type: string
         default: "''"
 
