@@ -5,7 +5,7 @@
 *.pyc
 
 # data
-data/cifar_dataset/
+data/cifar_dataset/cifar-10-batches-py
 
 # packaging
 dist/

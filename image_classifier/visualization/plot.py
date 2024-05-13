@@ -16,7 +16,7 @@ logger.setLevel(logging.INFO)
 
 def add_bar_values(classes, values):
     for i in range(len(classes)):
-        plt.text(i, values[i] + 1, values[i], ha="center")
+        plt.text(i, values[i] + 1, f"{values[i]:.2f}", ha="center")
 
 
 def save_metrics_plot(

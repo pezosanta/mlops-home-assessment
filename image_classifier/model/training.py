@@ -13,7 +13,7 @@ logging.basicConfig(
     level=logging.WARNING,
     datefmt="%Y-%m-%d %H:%M:%S [%Z]",
 )
-logger = logging.getLogger("TRAIN")
+logger = logging.getLogger("TRAINING")
 logger.setLevel(logging.INFO)
 
 
@@ -34,7 +34,7 @@ def train(
 
         # Using "uninterruptible" tqdm as progress bar.
         # All terminal logs within a tqdm progress will be printed above the progress bar.
-        pbar = tqdm(unit="batches", total=len(trainloader), desc=f"Training epoch[{epoch+1}/{num_epochs}]")
+        pbar = tqdm(unit="batches", total=len(trainloader), desc=f"Training epoch[{epoch+1}/{num_epochs}]", position=0)
         for i, data in enumerate(trainloader, 0):
             inputs, labels = data[0].to(device), data[1].to(device)
 

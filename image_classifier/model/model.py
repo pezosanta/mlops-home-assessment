@@ -36,11 +36,22 @@ class Net(nn.Module):
         return x
 
 
-def get_model() -> nn.Module:
+def get_model(
+    pretrained_model_path: str = None, base_path: Path = Path(__file__).parents[2].joinpath("experiments")
+) -> nn.Module:
+
     # Handling model structure based hyperparameters here (if there were any)
     logger.info(msg="Composing and returning model.")
+    model = Net()
 
-    return Net()
+    if pretrained_model_path:
+        print(pretrained_model_path)
+        full_model_path = base_path.joinpath(pretrained_model_path)
+
+        logger.info(msg=f"Loading pretrained model ({str(full_model_path)}).")
+        model.load_state_dict(state_dict=torch.load(full_model_path))
+
+    return model
 
 
 def save_model(
