@@ -13,8 +13,8 @@ source $workSpace/create_build_context.sh
 
 # Building the Docker image
 docker build \
-    --build-arg PYTHON_V=$pythonVersion \
-    -t $dockerImageTag
+    --build-arg PYTHON_V="$pythonVersion" \
+    -t "$dockerImageTag"
 
 # Cleanup the Docker build context
 source $workSpace/cleanup_build_context.sh
