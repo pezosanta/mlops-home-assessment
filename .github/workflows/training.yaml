@@ -1,0 +1,23 @@
+name: Training
+
+on: [workflow_dispatch]
+
+jobs:
+  training:
+    name: Training the Image Classifier model
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout repository with GIT LFS
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+    - name: Setting up Python3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+    - name: Installing code development requirements
+      run: |
+        source requirements-dev.sh
+    - name: Running the Training (main) script
+      run: |
+        image_classifier_trainer --experiment_name github_actions_exp_test --run_name run_1 --db_pass ZA68eWqt8VWBTQwPBrpI
