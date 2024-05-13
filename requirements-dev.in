@@ -4,6 +4,7 @@ matplotlib
 numpy
 pyyaml
 tqdm
+ipykernel
 
 # python packaging related packages
 setuptools >= 69.0
