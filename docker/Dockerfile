@@ -17,7 +17,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Create symlink to always use $PYTHON_VERSION
-RUN ln -s /usr/bin/$PYTHON_VERSION /usr/bin/python3
+RUN ln -s /usr/bin/$PYTHON_VERSION /usr/bin/python
 
 # Install prod dependencies
 COPY requirements-prod.sh requirements-prod.txt *.whl /tmp/
