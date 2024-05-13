@@ -1,4 +1,5 @@
 name: Image Classifier Training
+run-name: "Experiment: ${{ inputs.experiment_name }} / Run: ${{ inputs.run_name }}"
 
 on: 
   workflow_dispatch:
