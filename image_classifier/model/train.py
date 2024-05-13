@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
-from tqdm.auto import tqdm
+from tqdm import tqdm
 
 # Setting the logging level of other loggers to WARNING
 logging.basicConfig(
@@ -34,7 +34,7 @@ def train(
 
         # Using "uninterruptible" tqdm as progress bar.
         # All terminal logs within a tqdm progress will be printed above the progress bar.
-        pbar = tqdm(unit="batches", total=len(trainloader), desc=f"Training epoch[{epoch+1}/{num_epochs}]")
+        pbar = tqdm(unit="batches", total=len(trainloader), desc=f"Training epoch[{epoch+1}/{num_epochs}]", position=0)
         for i, data in enumerate(trainloader, 0):
             inputs, labels = data[0].to(device), data[1].to(device)
 
