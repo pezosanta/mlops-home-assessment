@@ -33,7 +33,7 @@ def validation(testloader: DataLoader, model: nn.Module, classes: list[str], dev
 
         accuracy = 100 * correct / total
 
-        logger.info(msg=f"Total test accuracy: {accuracy} %")
+        logger.info(msg=f"Total test accuracy: {accuracy:.2f} %")
 
         return accuracy
 
@@ -58,7 +58,7 @@ def validation(testloader: DataLoader, model: nn.Module, classes: list[str], dev
             curr_accuracy = 100 * class_correct[i] / class_total[i]
             accuracy.update({curr_class: curr_accuracy})
 
-            logger.info(msg=f"Class-wise accuracy [{curr_class}]: {curr_accuracy} %")
+            logger.info(msg=f"Class-wise accuracy [{curr_class}]: {curr_accuracy:.2f} %")
 
         return accuracy
 
