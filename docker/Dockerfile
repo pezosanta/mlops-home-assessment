@@ -21,7 +21,8 @@ RUN ln -s /usr/bin/$PYTHON_VERSION /usr/bin/python
 
 # Install prod dependencies
 COPY requirements-prod.sh requirements-prod.txt *.whl /tmp/
-RUN chmod +x /tmp/requirements-prod.sh && \
+RUN python -m pip install pip -U && \
+    chmod +x /tmp/requirements-prod.sh && \
     /tmp/requirements-prod.sh && \
     pip install /tmp/*.whl --no-cache-dir && \
     rm /tmp/requirements-prod.sh /tmp/requirements-prod.txt /tmp/*.whl 
