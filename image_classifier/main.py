@@ -9,7 +9,7 @@ import torch.optim as optim
 
 from image_classifier.data.data import get_db_connect_object, get_train_test_data_loader
 from image_classifier.model.model import get_model, save_model
-from image_classifier.model.train import train
+from image_classifier.model.training import train
 from image_classifier.model.validation import validation
 from image_classifier.visualization.plot import save_metrics_plot
 
