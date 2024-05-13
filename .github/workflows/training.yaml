@@ -65,7 +65,7 @@ jobs:
         source docker/build.sh
     - name: Running the Training (main) script in Docker image
       run: >
-        docker run -v "/$(pwd)/experiments:/experiments" -v "/$(pwd)/data/${{ inputs.dataset }}:/data" image-classifier
+        docker run -v ${GITHUB_WORKSPACE}/experiments:/experiments -v ${GITHUB_WORKSPACE}/data/${{ inputs.dataset }}:/data image-classifier
         image_classifier_trainer 
           --experiments_folder /experiments
           --experiment_name ${{ inputs.experiment_name }}
