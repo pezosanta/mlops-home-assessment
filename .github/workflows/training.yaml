@@ -1,4 +1,4 @@
-name: Training
+name: Image Classifier Training
 
 on: [pull_request, workflow_dispatch]
 
@@ -24,10 +24,6 @@ jobs:
     - name: Publish experiment results
       uses: actions/upload-artifact@v4
       with:
-        # Name of the artifact to upload.
-        # Optional. Default is 'artifact'
         name: experiment_results
-
-        # A file, directory or wildcard pattern that describes what to upload
-        # Required.
         path: experiments/github_actions_exp_test/run_1
+        compression-level: 0
