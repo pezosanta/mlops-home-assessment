@@ -212,7 +212,7 @@ Currently, 2 GitHub Actions Workflows are implemented and being used:
     - description: runs the configured pre-commit hooks against the modified files
     - triggers: automatic trigger at every git push event of all branches
 - **Image Classifier Training** (`.github/workflows/training.yaml`):
-    - description: builds the Docker image and runs the model training in Docker container. The experiment run outputs (`model.pth`, `metrics.png`) are published as build artifacts. If you wish to make a build artifact model available to use in later workflow runs as `pretrained_model`, then simply 
+    - description: builds the Docker image and runs the model training in Docker container. The experiment run outputs (`model.pth`, `metrics.png`) are published as build artifacts. If you wish to make a build artifact model available to be used in later workflow runs as `pretrained_model`, then simply 
         - download the build artifact
         - unzip it
         - copy the files into your local `<PATH_TO_THIS_REPO>/experiments/<your_experiment_name>/<your_run_name>/` folder
