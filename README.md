@@ -207,3 +207,10 @@ The experiments are tracked under the `experiments` folder. Each experiment run 
 Every `*.pth` and `*.png` file in the repository is versioned via `Git LFS` configured in `.gitattributes`.
 
 ## 8. GitHub Actions Workflows
+Currently, 2 GitHub Actions Workflows are implemented and being used:
+- **Code Quality checks with pre-commit** (`.github/workflows/pre-commit.yaml`): 
+    - description: runs the configured pre-commit hooks against the modified files
+    - triggers: automatic trigger at every git push event of all branches
+- **Image Classifier Training** (`.github/workflows/training.yaml`):
+    - description: builds the Docker image and runs the model training in Docker container
+    - triggers: manual (workflow_dispatch), model training input arguments can be configured on the UI
