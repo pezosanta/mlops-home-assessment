@@ -15,3 +15,5 @@ pip install -r $CURRENT_SCRIPT_DIR/requirements-dev.txt
 
 # Installing the image-classifier package in editable mode
 pip install -v -e $PROJECT_DIR
+
+rm -r $PROJECT_DIR/*.egg-info
