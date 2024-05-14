@@ -128,6 +128,57 @@ To ensure code quality, the following tools/packages are being used as pre-commi
 
 The pre-commit hooks are configured via the `.pre-commit-config.yaml` file. 
 
-Furthermore, `black` and `isort` properties are configured in `pyproject.toml`, `flake8` properties are configured in `tox.ini` (`flake8` does not yet support `pyproject.toml` based configuration by default).
+Furthermore, the following files are used to configure the tools/packages:
+- `pyproject.toml`: configure `black` and `isort` properties 
+- `tox.ini`: configure `flake8` properties (`flake8` does not yet support `pyproject.toml` based configuration by default).
+
+To install the pre-commit hooks locally, simply run the `requirements/requirements-dev.sh` script from anywhere via:
+```bash
+# Wherever you are
+source <PATH_TO_THIS_REPO>/requirements/requirements-dev.sh
+```
 
 ## 5. Python packaging
+`setuptools` is being used for building a `Python` package from the `image_classifier` src folder, which is required for both development and production (currently this means GitHub Actions Workflow based model training). The currently used package versions are:
+- `setuptools>=69.0`
+- `build>=1.0.3`
+
+To install these packages locally **in editable mode**, simply run the `requirements/requirements-dev.sh` script from anywhere via:
+```bash
+# Wherever you are
+source <PATH_TO_THIS_REPO>/requirements/requirements-dev.sh
+```
+
+If you want to build a `wheel` locally, run the following command within the repository, that will create a `*.whl` and a `*.tar.gz` file under the `<PATH_TO_THIS_REPO>/dist/` folder:
+```bash
+python -m build
+```
+
+The following files are used by `setuptools` for building the package
+- `pyproject.toml`: contains general information, build requirements and default logic on which python modules (`.py` files / folders with an `__init__.py` file in them) and non-python files (package data) must be contained in the package
+- `MANIFEST.in`: contains a set of commands with glob-like pattern matching to include (or exclude) relevant files that `setuptools` does not catch by default with the `pyproject.toml` settings
+
+For more information on `setuptools` based packaging, check the following links:
+- https://setuptools.pypa.io/en/latest/userguide/quickstart.html
+- https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+
+## 6. Docker
+To ensure reproducibility, model trainings are run in Docker containers in the training GitHub Actions Workflow runs.
+
+The `docker` folder contains all the files that are necessary to build the Docker image both locally and in the GitHub Action Workflow runs:
+- `Dockerfile`: the Docker image configuration file
+- `configure.sh`: shell script for setting up local variables for Docker build
+- `create_build_context.sh`: shell script for composing the Docker build context
+    - copying the `requirements/requirements-prod.(txt/sh)` files to the `docker` folder
+    - building the Python package and copying the resulting `dist/*.whl` file to the `docker` folder
+- `cleanup_build_context.sh`: shell script for cleaning up the repository after Docker build:
+    - deleting the `docker/requirements-prod.(txt/sh)` and `docker/*.whl` files
+    - deleting the `dist` and `*.egg-info` folders from the project root
+- `build.sh`: shell script for executing the `configure.sh`, `create_build_context.sh` shell scripts, the `docker build` command and finally the `cleanup_build_context.sh` shell script
+
+To build the Docker image locally, simply just run the `build.sh` shell script from anywhere:
+```bash
+source <PATH_TO_THIS_REPO>/docker/build.sh
+```
+
+## 7. SOURCE / PACKAGE folder
