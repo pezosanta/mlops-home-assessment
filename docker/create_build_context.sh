@@ -5,7 +5,7 @@ set -e
 
 workSpace=`dirname ${BASH_SOURCE[0]}`
 projectDir=$workSpace/../
-requirementsDir=$projectDir/../
+requirementsDir=$projectDir/requirements/
 
 # Building the Python package (creating wheel file)
 python -m build
