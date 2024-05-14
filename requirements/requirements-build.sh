@@ -4,4 +4,4 @@
 CURRENT_SCRIPT_DIR=`dirname ${BASH_SOURCE[0]}`
 
 # Installing Python package build related packages
-pip install -r $CURRENT_SCRIPT_DIR/requirements-cq.txt
+pip install -r $CURRENT_SCRIPT_DIR/requirements-build.txt
