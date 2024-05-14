@@ -104,10 +104,16 @@ def parse_args() -> argparse.Namespace:
         "--experiments_folder", type=Path, help="Path to the PARENT experiments folder containing the experiments."
     )
     parser.add_argument(
-        "--experiment_name", type=str, help="Experiment name to save the model and validation metrics to."
+        "--experiment_name",
+        type=str,
+        required=True,
+        help="Experiment name to save the model and validation metrics to.",
     )
     parser.add_argument(
-        "--run_name", type=str, help="Run name to save the model and validation metrics to. MUST BE UNIQUE!"
+        "--run_name",
+        type=str,
+        required=True,
+        help="Run name to save the model and validation metrics to. MUST BE UNIQUE!",
     )
     parser.add_argument("--dataset_folder", type=Path, help="Path to the dataset folder to be used in the training.")
     parser.add_argument("--learning_rate", type=float, default=0.001, help="Learning Rate for the SGD optimizer.")
@@ -123,7 +129,7 @@ def parse_args() -> argparse.Namespace:
         help="Path to the pretrained model weights (relative to <experiments_folder>) \
             to use as initial weights in training.",
     )
-    parser.add_argument("--db_pass", type=str, help="DB password for connection.")
+    parser.add_argument("--db_pass", required=True, type=str, help="DB password for connection.")
 
     known_args, unknown_args = parser.parse_known_args()
 

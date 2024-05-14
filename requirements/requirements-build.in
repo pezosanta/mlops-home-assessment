@@ -1,11 +1,3 @@
-torch
-torchvision
-matplotlib
-numpy
-pyyaml
-tqdm
-ipykernel
-
 # python packaging related packages
 setuptools >= 69.0
 build >= 1.0.3
