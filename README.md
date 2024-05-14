@@ -120,3 +120,14 @@ For each requirements, there is a `requirements-*.sh` shell script which with on
 - the repository in editable mode (`pip install -v -e <PATH_TO_THIS_REPO>`)
 
 ## 4. Pre-commit hooks
+To ensure code quality, the following tools/packages are being used as pre-commit hooks:
+- `pre-commit`: file checkers (json, yaml, executables), end of file whitespace checker
+- `flake8`: linter
+- `black`: code formatter
+- `isort`: Python imports formatter
+
+The pre-commit hooks are configured via the `.pre-commit-config.yaml` file. 
+
+Furthermore, `black` and `isort` properties are configured in `pyproject.toml`, `flake8` properties are configured in `tox.ini` (`flake8` does not yet support `pyproject.toml` based configuration by default).
+
+## 5. Python packaging
