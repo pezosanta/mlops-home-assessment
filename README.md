@@ -182,3 +182,28 @@ source <PATH_TO_THIS_REPO>/docker/build.sh
 ```
 
 ## 7. SOURCE / PACKAGE folder
+The `image_classifier` folder is the SOURCE / PACKAGE folder that contains all the scripts/files relevant for model training.
+
+To run a model training locally simply run the `image_classifier/main.py` script and set the arguments as needed:
+```shell
+# With Python3.10
+python -m image_classifier.main \
+    --experiment_name <your_experiment_name> \ # REQUIRED
+    --run_name <your_run_name> \ # REQUIRED
+    --dataset_folder <your_dataset> \ # OPTIONAL, defaults to data/cifar_dataset
+    --learning_rate <your_learning_rate> \ # OPTIONAL
+    --momentum <your_momentum> \ # OPTIONAL
+    --num_epochs <your_num_epochs> \ # OPTIONAL
+    --num_workers <your_num_workers> \ # OPTIONAL
+    --batch_size <your_batch_size> \ # OPTIONAL
+    --pretrained_model <path_to_pretrained_model_relative_to_experiments_folder> \ # OPTIONAL, e.g.: local_exp_test/run_1/model.pth 
+    --db_pass <your_mocked_password> \ # REQUIRED
+```
+
+Note that instead of `python -m image_classifier.main` you can simply use `image_classifier_trainer` as an alias (see in `pyproject.toml`).
+
+The experiments are tracked under the `experiments` folder. Each experiment run outputs a trained `model.pth` file and a corresponding `metrics.png` of the validation accuracy metrics.
+
+Every `*.pth` and `*.png` file in the repository is versioned via `Git LFS` configured in `.gitattributes`.
+
+## 8. GitHub Actions Workflows
