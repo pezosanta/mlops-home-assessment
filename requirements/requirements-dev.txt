@@ -6,8 +6,6 @@
 #
 asttokens==2.4.1
     # via stack-data
-build==1.2.1
-    # via -r requirements-dev.in
 comm==0.2.2
     # via ipykernel
 contourpy==1.2.1
@@ -99,7 +97,6 @@ nvidia-nvtx-cu12==12.1.105
     # via torch
 packaging==24.0
     # via
-    #   build
     #   ipykernel
     #   matplotlib
 parso==0.8.4
@@ -124,8 +121,6 @@ pygments==2.18.0
     # via ipython
 pyparsing==3.1.2
     # via matplotlib
-pyproject-hooks==1.1.0
-    # via build
 python-dateutil==2.9.0.post0
     # via
     #   jupyter-client
@@ -144,8 +139,6 @@ stack-data==0.6.3
     # via ipython
 sympy==1.12
     # via torch
-tomli==2.0.1
-    # via build
 torch==2.3.0
     # via
     #   -r requirements-dev.in
@@ -174,6 +167,3 @@ typing-extensions==4.11.0
     #   torch
 wcwidth==0.2.13
     # via prompt-toolkit
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools
