@@ -16,6 +16,8 @@ mlops-home-assessment
 ├── .github                     # CODEOWNERS, GitHub Actions Workflow definitions
 │   ├── CODEOWNERS
 │   └── workflows
+│       ├── pre-commit.yaml
+│       └── training.yaml
 ├── .gitignore                  # gitignore
 ├── .pre-commit-config.yaml     # Pre-commit hooks related settings
 ├── MANIFEST.in                 # Python packaging related
