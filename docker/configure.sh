@@ -1,4 +1,4 @@
 #!/bin/bash
 
-pythonVersion="python3.10"
-dockerImageTag="image-classifier"
+export pythonVersion="python3.10"
+export dockerImageTag="image-classifier"

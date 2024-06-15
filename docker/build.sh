@@ -3,19 +3,20 @@
 # Exit bash whenever an error occurs
 set -e
 
-workSpace=`dirname ${BASH_SOURCE[0]}`
+workSpace=$(dirname "${BASH_SOURCE[0]}")
 
 # Configure variables
-source $workSpace/configure.sh
+source "$workSpace"/configure.sh
 
 # Creating the Docker build context
-source $workSpace/create_build_context.sh
+source "$workSpace"/create_build_context.sh
 
 # Building the Docker image
+# shellcheck disable=SC2154
 docker build \
-    --build-arg PYTHON_V=$pythonVersion \
-    -t $dockerImageTag \
-    $workSpace
+    --build-arg PYTHON_V="$pythonVersion" \
+    -t "$dockerImageTag" \
+    "$workSpace"
 
 # Cleanup the Docker build context
-source $workSpace/cleanup_build_context.sh
+source "$workSpace"/cleanup_build_context.sh
