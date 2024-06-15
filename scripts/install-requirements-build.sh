@@ -6,4 +6,4 @@ PROJECT_DIR="$CURRENT_SCRIPT_DIR"/../
 
 # Installing Poetry
 cd "$PROJECT_DIR" || { echo "Could not cd to $PROJECT_DIR"; exit 1; }
-pip install poetry
+pip install poetry, poetry-plugin-export
