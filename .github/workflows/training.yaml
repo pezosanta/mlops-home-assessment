@@ -55,6 +55,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         lfs: true
+        fetch-depth: 0
         fetch-tags: true
     - name: Setting up Python3.10
       uses: actions/setup-python@v5
