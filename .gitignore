@@ -1,5 +1,5 @@
-# virtualenv
-.venv/
+# virtualenvs
+.venvs/
 
 # pycache
 *.pyc
