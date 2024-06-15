@@ -11,7 +11,8 @@ poetry export --format requirements.txt --output "$workSpace"/requirements-train
 poetry export --format requirements.txt --output "$workSpace"/requirements-prod.txt --with prod
 
 # Building the Python package (creating wheel file)
-poetry version "$(git describe HEAD --tags --match "*.*.*" | sed 's/\(.*\)-\([0-9]\{1,4\}\)-\(.*\)/\1.dev\2+\3/')"
+# shellcheck disable=SC2154
+poetry version "$version"
 poetry build
 poetry version 0.0.0
 
