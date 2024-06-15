@@ -16,6 +16,8 @@ jobs:
       with:
         python-version: "3.10"
     - name: Installing code quality requirements
-      run: source scripts/install-requirements-cq.sh
+      run: |
+        export POETRY_VIRTUALENVS_CREATE=false
+        source scripts/install-requirements-cq.sh
     - name: Running Code Quality checks with pre-commit
       uses: pre-commit/action@v3.0.1
