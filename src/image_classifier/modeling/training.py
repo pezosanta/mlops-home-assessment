@@ -26,9 +26,9 @@ def train(
     device: str,
 ) -> None:
 
-    device = torch.device(device=device)
+    torch_device = torch.device(device=device)
 
-    logger.info(msg=f"Starting training for {num_epochs} epochs on {device.type}.")
+    logger.info(msg=f"Starting training for {num_epochs} epochs on {torch_device.type}.")
     for epoch in range(num_epochs):
         running_loss = 0.0
 
@@ -36,7 +36,7 @@ def train(
         # All terminal logs within a tqdm progress will be printed above the progress bar.
         pbar = tqdm(unit="batches", total=len(trainloader), desc=f"Training epoch[{epoch+1}/{num_epochs}]", position=0)
         for i, data in enumerate(trainloader, 0):
-            inputs, labels = data[0].to(device), data[1].to(device)
+            inputs, labels = data[0].to(torch_device), data[1].to(torch_device)
 
             # zero the parameter gradients
             optimizer.zero_grad()

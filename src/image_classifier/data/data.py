@@ -24,7 +24,7 @@ def get_db_connect_object(db_pass: str, db_config: Path = Path(__file__).parent.
     In a real world scenario, db password would be acquired from a Secret Manager / Key Vault service.
     """
 
-    def mocked_db_connector(db_host: str, db_name, db_user: str, db_pass: str) -> object:
+    def mocked_db_connector(db_host: str, db_name: str, db_user: str, db_pass: str) -> object:
         return object
 
     logger.info(msg="Getting the DB connetion object.")
@@ -46,12 +46,13 @@ def get_train_test_data_loader(
     db_connect: object,
     batch_size: int = 4,
     num_workers: int = 2,
-    local_dataset_path: Path = Path(__file__).parents[2].joinpath("data/cifar_dataset"),
+    local_dataset_path: Path = Path(__file__).parents[3].joinpath("data/cifar_dataset"),
 ) -> tuple[DataLoader, DataLoader, list[str]]:
     """
     For the purpose of this exercice, this function is here to simulate a call to a database.
     You can keep it like that but keep in mind in a real situation, here you would have the code for db communication.
     """
+    _ = db_connect
 
     logger.info(f"Loading Dataset from {local_dataset_path}.")
 

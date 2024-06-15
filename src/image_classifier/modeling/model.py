@@ -17,7 +17,7 @@ logger.setLevel(logging.INFO)
 
 
 class Net(nn.Module):
-    def __init__(self):
+    def __init__(self) -> None:
         super(Net, self).__init__()
         self.conv1 = nn.Conv2d(3, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
@@ -26,7 +26,7 @@ class Net(nn.Module):
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = x.view(-1, 16 * 5 * 5)
@@ -37,7 +37,7 @@ class Net(nn.Module):
 
 
 def get_model(
-    pretrained_model_path: str = None, base_path: Path = Path(__file__).parents[2].joinpath("experiments")
+    pretrained_model_path: str | None = None, base_path: Path = Path(__file__).parents[3].joinpath("experiments")
 ) -> nn.Module:
 
     # Handling model structure based hyperparameters here (if there were any)
@@ -54,7 +54,7 @@ def get_model(
 
 
 def save_model(
-    model: Net, experiment_name: str, run_name: str, base_path: Path = Path(__file__).parents[2].joinpath("experiments")
+    model: Net, experiment_name: str, run_name: str, base_path: Path = Path(__file__).parents[3].joinpath("experiments")
 ) -> None:
 
     run_path = base_path.joinpath(f"{experiment_name}/{run_name}")

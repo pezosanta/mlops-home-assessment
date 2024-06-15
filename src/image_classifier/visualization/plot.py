@@ -14,7 +14,7 @@ logger = logging.getLogger("PLOT")
 logger.setLevel(logging.INFO)
 
 
-def add_bar_values(classes, values):
+def add_bar_values(classes: list[str], values: list[float]) -> None:
     for i in range(len(classes)):
         plt.text(i, values[i] + 1, f"{values[i]:.2f}", ha="center")
 
@@ -23,7 +23,7 @@ def save_metrics_plot(
     metrics: dict[str, float],
     experiment_name: str,
     run_name: str,
-    base_path: Path = Path(__file__).parents[2].joinpath("experiments"),
+    base_path: Path = Path(__file__).parents[3].joinpath("experiments"),
 ) -> None:
 
     run_path = base_path.joinpath(f"{experiment_name}/{run_name}")
