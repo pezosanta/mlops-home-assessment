@@ -13,6 +13,7 @@ jobs:
         lfs: true
     - name: Installing Poetry
       run: |
+        export POETRY_VIRTUALENVS_CREATE=false
         source scripts/install-requirements-build.sh
     - name: Setting up Python virtualenv
       uses: actions/setup-python@v5
