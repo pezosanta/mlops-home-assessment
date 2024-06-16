@@ -57,11 +57,11 @@ jobs:
         lfs: true
         fetch-depth: 0
         fetch-tags: true
-    - name: Setting up Python3.10
+    - name: Setting up Python virtualenv
       uses: actions/setup-python@v5
       with:
-        python-version: "3.10"
-    - name: Install Python package build dependencies
+        python-version-file: "pyproject.toml"
+    - name: Installing Poetry
       run: source scripts/install-requirements-build.sh
     - name: Build Docker image
       run: |
