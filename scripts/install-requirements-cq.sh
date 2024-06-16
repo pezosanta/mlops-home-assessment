@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Setting the relative path of current script's parent directory into an environment variable
+# Setting the relative path of current script's parent directory and the project's root directory into a local variable
 CURRENT_SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 PROJECT_DIR="$CURRENT_SCRIPT_DIR"/../
 
