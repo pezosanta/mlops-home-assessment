@@ -7,4 +7,4 @@ PROJECT_DIR="$CURRENT_SCRIPT_DIR"/../
 # Installing code quality related packages and pre-commit hooks
 cd "$PROJECT_DIR" || { echo "Could not cd to $PROJECT_DIR"; exit 1; }
 poetry install --only test --no-root
-pre-commit install
+poetry run pre-commit install

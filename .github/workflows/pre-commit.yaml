@@ -13,7 +13,6 @@ jobs:
         lfs: true
     - name: Installing Poetry
       run: |
-        export POETRY_VIRTUALENVS_CREATE=false
         source scripts/install-requirements-build.sh
     - name: Setting up Python virtualenv
       uses: actions/setup-python@v5
@@ -22,8 +21,6 @@ jobs:
         cache: "poetry"
     - name: Installing code quality requirements
       run: |
-        export POETRY_VIRTUALENVS_CREATE=false
-        source scripts/install-requirements-build.sh
         source scripts/install-requirements-cq.sh
     - name: Running Code Quality checks with pre-commit
       uses: pre-commit/action@v3.0.1
