@@ -8,4 +8,3 @@ PROJECT_DIR="$CURRENT_SCRIPT_DIR"/../
 cd "$PROJECT_DIR" || { echo "Could not cd to $PROJECT_DIR"; exit 1; }
 poetry install --only test --no-root
 poetry run pre-commit install
-# cache test
