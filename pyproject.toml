@@ -43,6 +43,7 @@ pyyaml = "*"
 
 # Packages that need to be installed for training besides 'main' packages
 [tool.poetry.group.train.dependencies]
+comet_ml = "*"
 matplotlib = "*"
 torch = "*"
 torchvision = "*"
