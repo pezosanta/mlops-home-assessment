@@ -38,7 +38,7 @@ packages = [
 # Packages that always need to be installed (except for pre-commit hooks aka test)
 # This is an implicit 'main' group
 [tool.poetry.dependencies]
-python = "^3.10.0"
+python = "3.10"
 pyyaml = "*"
 
 # Packages that need to be installed for training besides 'main' packages
