@@ -3,6 +3,9 @@
 # Setting the relative path of current script's parent directory into a local variable
 CURRENT_SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 
+# Upgrading pip
+python -m pip install --upgrade pip
+
 # Installing Python package build related packages
 source "$CURRENT_SCRIPT_DIR"/install-requirements-build.sh
 

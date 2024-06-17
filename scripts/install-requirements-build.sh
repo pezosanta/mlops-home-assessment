@@ -4,6 +4,9 @@
 CURRENT_SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 PROJECT_DIR="$CURRENT_SCRIPT_DIR"/../
 
+# Upgrading pip
+python -m pip install --upgrade pip
+
 # Installing Poetry
 cd "$PROJECT_DIR" || { echo "Could not cd to $PROJECT_DIR"; exit 1; }
 pip install poetry poetry-plugin-export
