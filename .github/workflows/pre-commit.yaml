@@ -7,18 +7,35 @@ jobs:
     name: Code Quality checks with pre-commit
     runs-on: ubuntu-22.04
     steps:
+    # Checkout repository
     - name: Checkout repository
       uses: actions/checkout@v4
+      
+    # Installing Poetry as it is required for caching
     - name: Installing Poetry
       run: |
         source scripts/install-requirements-build.sh
-    - name: Setting up Python virtualenv
+
+    # Setting up Python virtualenv with Poetry cache
+    # Getting the Python version (that is used for creating the virtualenv) from pyproject.toml
+    # Poetry cache is used to speed up the installation of dependencies:
+    #   - if poetry.lock is unchanged since the last run, the dependencies are installed from the cache
+    #   - otherwise, the dependencies are installed from the lock file
+    - name: Setting up Python virtualenv with Poetry cache
       uses: actions/setup-python@v5
       with:
         python-version-file: "pyproject.toml"
         cache: "poetry"
-    - name: Installing code quality requirements
+    
+    # Installing code quality dependencies (required for pre-commit hooks)
+    - name: Installing code quality dependencies
       run: |
         source scripts/install-requirements-cq.sh
+
+    # Running Code Quality checks with pre-commit
+    # Because of the cache:
+    #   - if the .pre-commit-config.yaml file is unchanged since the last run, 
+    #     the pre-commit hook virtualenvs are used from the cache
+    #   - otherwise, the pre-commit hook virtualenvs are recreated
     - name: Running Code Quality checks with pre-commit
       uses: pre-commit/action@v3.0.1
