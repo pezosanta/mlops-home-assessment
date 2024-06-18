@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Setting the relative path of current script's parent directory and the project's root directory into a local variable
+# This way, we can call this script from any directory and it will still work
 CURRENT_SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 PROJECT_DIR="$CURRENT_SCRIPT_DIR"/../
 

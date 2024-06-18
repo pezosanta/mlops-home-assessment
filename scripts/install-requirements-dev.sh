@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Setting the relative path of current script's parent directory into a local variable
+# This way, we can call this script from any directory and it will still work
 CURRENT_SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 
 # Upgrading pip
