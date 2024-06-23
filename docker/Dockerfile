@@ -20,9 +20,8 @@ RUN apt-get update && \
 RUN ln -s /usr/bin/$PYTHON_VERSION /usr/bin/python
 
 # Install prod dependencies
-COPY requirements-prod.sh requirements-prod.txt *.whl /tmp/
+COPY requirements-train.txt *.whl /tmp/
 RUN python -m pip install pip -U && \
-    chmod +x /tmp/requirements-prod.sh && \
-    /tmp/requirements-prod.sh && \
+    pip install -r /tmp/requirements-train.txt --no-cache-dir && \
     pip install /tmp/*.whl --no-cache-dir && \
-    rm /tmp/requirements-prod.sh /tmp/requirements-prod.txt /tmp/*.whl 
+    rm /tmp/requirements-train.txt /tmp/*.whl 

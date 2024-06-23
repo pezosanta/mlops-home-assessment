@@ -1,3 +1,4 @@
+#### Code Quality checker tools settings ####
 [tool.black]
 line-length = 120
 target-version = ["py310"]
@@ -6,30 +7,71 @@ target-version = ["py310"]
 profile = "black"
 line_length = 120
 
-# Python packaging
+[tool.mypy]
+python_version = "3.10"
+
+[tool.vulture]
+exclude = [
+    "src/image_classifier/logger/logger.py",
+    "src/image_classifier/utils/file_loaders.py"
+]
+ignore_names = ["forward*"]
+min_confidence = 60
+paths = ["src/image_classifier"]
+sort_by_size = true
+
+#### Python packaging ####
 [build-system]
-requires = ["setuptools >= 69.0", "build >= 1.0.3"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
-[project]
+[tool.poetry]
 name = "image-classifier"
-requires-python = "~= 3.10"
-version = "0.0.1"
-dependencies = []
-authors = [
-    {name = "Santa Peter", email = "private@email.com"}
+version = "0.0.0"
+description = "test"
+license = "MIT"
+authors = ["Peter Santa"]
+maintainers = ["Peter Santa"]
+readme = "README.md"
+repository = "https://github.com/pezosanta/mlops-home-assessment"
+packages = [
+    {include = "image_classifier", from = "src"}
 ]
-maintainers = [
-    {name = "Santa Peter", email = "private@email.com"}
-]
-description = "MLOps home assesment - Image Classification Network"
-readme = "REAMDE.md"
-license = {text = "Mocked license"}
-keywords = ["MLOps", "mlops", "image classification"]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["image_classifier*"]
+# Packages that always need to be installed (except for pre-commit hooks aka test)
+# This is an implicit 'main' group
+[tool.poetry.dependencies]
+python = "3.10.*"
+pyyaml = "*"
 
-[project.scripts]
-image_classifier_trainer = "image_classifier.main:main"
+# Packages that need to be installed for training besides 'main' packages
+[tool.poetry.group.train.dependencies]
+comet_ml = "*"
+matplotlib = "*"
+torch = "*"
+torchvision = "*"
+tqdm = "*"
+
+# Packages that need to be installed for production besides 'main' packages
+[tool.poetry.group.prod.dependencies]
+fastapi = "*"
+onnxruntime = "*"
+
+# Packages that need to be installed for local development
+[tool.poetry.group.dev.dependencies]
+ipykernel = "*"
+
+# Packages that need to be installed for code quality checks / pre-commit hooks
+[tool.poetry.group.test.dependencies]
+black = "*"
+flake8 = "*"
+isort = "*"
+mypy = "*"
+pre-commit = "*"
+pytest = "*"
+vulture = "*"
+shellcheck-py = "*"
+
+# CLI command aliases
+[tool.poetry.scripts]
+image-classifier-trainer = "image_classifier.main:main"

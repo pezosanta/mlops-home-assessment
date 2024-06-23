@@ -1,2 +1,12 @@
+# Using git LFS (Large File Storage) to store large files
 *.pth filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
+
+# Resolving Git line ending (EOL) issues in containers (resulting in many modified files)
+# Since Windows and Linux use different default line endings, Git may report a large number of modified files
+# that have no differences aside from their line endings. To prevent this from happening,
+# force everything to be LF, except for Windows batch files that require CRLF
+# Source: https://code.visualstudio.com/docs/devcontainers/tips-and-tricks
+* text=auto eol=lf
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf

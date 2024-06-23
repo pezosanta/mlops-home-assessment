@@ -1,0 +1,39 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  stdout:
+    (): image_classifier.logger.logger.ColorFormatter
+    cyan: "\x1b[0;36m"
+    yellow: "\x1b[0;33m"
+    red: "\x1b[0;31m"
+    bold_red: "\x1b[1;31m"
+    reset: "\x1b[0m"
+    format: "%(asctime)s - %(name)s - [%(filename)s:%(lineno)d] - %(levelname)s - %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S [%Z]"
+
+filters:
+  stdout:
+    (): image_classifier.logger.logger.StdoutFilter
+
+  stderr:
+    (): image_classifier.logger.logger.StderrFilter
+
+handlers:
+  stdout:
+    class: logging.StreamHandler
+    formatter: stdout
+    filters: [stdout]
+    stream: ext://sys.stdout
+
+  stderr:
+    class: logging.StreamHandler
+    formatter: stdout
+    filters: [stderr]
+    stream: ext://sys.stderr
+
+loggers:
+  root:
+    level: WARNING
+    handlers: [stdout, stderr]
+    propagate: false

@@ -8,18 +8,13 @@ import torch.nn as nn
 import torch.optim as optim
 
 from image_classifier.data.data import get_db_connect_object, get_train_test_data_loader
-from image_classifier.model.model import get_model, save_model
-from image_classifier.model.training import train
-from image_classifier.model.validation import validation
+from image_classifier.logger.logger import initialize_root_logger
+from image_classifier.modeling.model import get_model, save_model
+from image_classifier.modeling.training import train
+from image_classifier.modeling.validation import validation
 from image_classifier.visualization.plot import save_metrics_plot
 
-# Setting the logging level of other loggers to WARNING
-logging.basicConfig(
-    format="%(asctime)s - %(name)s - [%(filename)s:%(lineno)d] - %(levelname)s - %(message)s",
-    encoding="utf-8",
-    level=logging.WARNING,
-    datefmt="%Y-%m-%d %H:%M:%S [%Z]",
-)
+initialize_root_logger()
 logger = logging.getLogger("MAIN")
 logger.setLevel(logging.INFO)
 
