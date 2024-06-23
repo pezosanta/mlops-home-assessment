@@ -5,13 +5,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# Setting the logging level of other loggers to WARNING
-logging.basicConfig(
-    format="%(asctime)s - %(name)s - [%(filename)s:%(lineno)d] - %(levelname)s - %(message)s",
-    encoding="utf-8",
-    level=logging.WARNING,
-    datefmt="%Y-%m-%d %H:%M:%S [%Z]",
-)
 logger = logging.getLogger("MODEL")
 logger.setLevel(logging.INFO)
 

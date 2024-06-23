@@ -1,4 +1,3 @@
-import json
 import logging
 from pathlib import Path
 
@@ -7,13 +6,8 @@ import yaml
 from torch.utils.data import DataLoader
 from torchvision.datasets import CIFAR10
 
-# Setting the logging level of other loggers to WARNING
-logging.basicConfig(
-    format="%(asctime)s - %(name)s - [%(filename)s:%(lineno)d] - %(levelname)s - %(message)s",
-    encoding="utf-8",
-    level=logging.WARNING,
-    datefmt="%Y-%m-%d %H:%M:%S [%Z]",
-)
+from image_classifier.utils.file_loaders import load_json
+
 logger = logging.getLogger("DATA")
 logger.setLevel(logging.INFO)
 
@@ -27,6 +21,7 @@ def get_db_connect_object(db_pass: str, db_config: Path = Path(__file__).parent.
     def mocked_db_connector(db_host: str, db_name: str, db_user: str, db_pass: str) -> object:
         return object
 
+    logger.critical(msg="This is a critical message.")
     logger.info(msg="Getting the DB connetion object.")
 
     # Getting non-secret db infos from config file
@@ -59,10 +54,7 @@ def get_train_test_data_loader(
     def get_classes() -> list[str]:
         logger.info(msg="Getting dataset classes.")
 
-        with open(file=local_dataset_path.joinpath("metadata.json"), mode="r") as f:
-            classes = json.load(f)["classes"]
-
-        return classes
+        return load_json(file_path=local_dataset_path.joinpath("metadata.json"))["classes"]
 
     logger.info(msg=f"Creating Train DataLoader with batch_size={batch_size}, num_workers={num_workers}.")
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])

@@ -11,8 +11,11 @@ line_length = 120
 python_version = "3.10"
 
 [tool.vulture]
+exclude = [
+    "src/image_classifier/logger/logger.py",
+    "src/image_classifier/utils/file_loaders.py"
+]
 ignore_names = ["forward*"]
-make_whitelist = true
 min_confidence = 60
 paths = ["src/image_classifier"]
 sort_by_size = true
