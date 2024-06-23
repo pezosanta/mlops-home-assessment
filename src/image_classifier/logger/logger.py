@@ -8,13 +8,11 @@ from image_classifier.utils.file_loaders import load_yaml
 class ColorFormatter(logging.Formatter):
     """Logging Formatter to add colors and count warning / errors"""
 
-    def __init__(
-        self, cyan: str, black: str, yellow: str, red: str, bold_red: str, reset: str, format: str, datefmt: str
-    ) -> None:
+    def __init__(self, cyan: str, yellow: str, red: str, bold_red: str, reset: str, format: str, datefmt: str) -> None:
         self.datefmt = datefmt
         self._formats = {
             logging.DEBUG: cyan + format + reset,
-            logging.INFO: black + format + reset,
+            logging.INFO: format,
             logging.WARNING: yellow + format + reset,
             logging.ERROR: red + format + reset,
             logging.CRITICAL: bold_red + format + reset,

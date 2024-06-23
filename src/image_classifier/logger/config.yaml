@@ -5,7 +5,6 @@ formatters:
   stdout:
     (): image_classifier.logger.logger.ColorFormatter
     cyan: "\x1b[0;36m"
-    black: "\x1b[0;30m"
     yellow: "\x1b[0;33m"
     red: "\x1b[0;31m"
     bold_red: "\x1b[1;31m"
