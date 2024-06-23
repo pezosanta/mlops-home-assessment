@@ -9,7 +9,7 @@ from torchvision.datasets import CIFAR10
 from image_classifier.utils.file_loaders import load_json
 
 logger = logging.getLogger("DATA")
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 def get_db_connect_object(db_pass: str, db_config: Path = Path(__file__).parent.joinpath("db_connect.yaml")) -> object:
@@ -21,6 +21,10 @@ def get_db_connect_object(db_pass: str, db_config: Path = Path(__file__).parent.
     def mocked_db_connector(db_host: str, db_name: str, db_user: str, db_pass: str) -> object:
         return object
 
+    logger.debug(msg="This is a debug message.")
+    logger.info(msg="This is a info message.")
+    logger.warning(msg="This is a warning message.")
+    logger.error(msg="This is a error message.")
     logger.critical(msg="This is a critical message.")
     logger.info(msg="Getting the DB connetion object.")
 
