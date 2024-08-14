@@ -1,68 +1,129 @@
 import logging
 from pathlib import Path
 
+import lightning as L
+import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
-import yaml
-from torch.utils.data import DataLoader
-from torchvision.datasets import CIFAR10
-
-from image_classifier.utils.file_loaders import load_json
+from torch.utils.data import DataLoader, random_split
+from torchvision.datasets import FashionMNIST
 
 logger = logging.getLogger("DATA")
 logger.setLevel(logging.DEBUG)
 
 
-def get_db_connect_object(db_pass: str, db_config: Path = Path(__file__).parent.joinpath("db_connect.yaml")) -> object:
-    """
-    Mocking a db connection.
-    In a real world scenario, db password would be acquired from a Secret Manager / Key Vault service.
-    """
+class FashionMNISTDataModule(L.LightningDataModule):
+    CLASSES = {
+        0: "T-shirt/top",
+        1: "Trouser",
+        2: "Pullover",
+        3: "Dress",
+        4: "Coat",
+        5: "Sandal",
+        6: "Shirt",
+        7: "Sneaker",
+        8: "Bag",
+        9: "Ankle boot",
+    }
 
-    def mocked_db_connector(db_host: str, db_name: str, db_user: str, db_pass: str) -> object:
-        return object
+    def __init__(
+        self,
+        data_dir: Path = Path(__file__).parents[3].joinpath(".data/fashion_mnist_dataset"),
+        batch_size: int = 32,
+        num_workers: int = 4,
+        prefetch_factor: int = 4,
+        train_val_split: float = 0.8,
+        horizontal_flip_prob: float = 0.5,
+        rotation_degrees: int = 10,
+        local_experiment: bool = False,
+    ) -> None:
 
-    logger.info(msg="Getting the DB connetion object.")
+        super().__init__()
 
-    # Getting non-secret db infos from config file
-    with open(file=db_config, mode="r") as f:
-        db_config_dict = yaml.safe_load(f)
-        db_host = db_config_dict["db"]["host"]
-        db_name = db_config_dict["db"]["name"]
-        db_user = db_config_dict["db"]["user"]
+        self.data_dir = data_dir
+        self.batch_size = batch_size
+        self.num_workers = num_workers
+        self.prefetch_factor = prefetch_factor
+        self.train_val_split = train_val_split
+        self.local_experiment = local_experiment
 
-    # creating mocked db connector object
-    db_connector = mocked_db_connector(db_host=db_host, db_name=db_name, db_user=db_user, db_pass=db_pass)
+        # Tunable data augmentation hyperparameters
+        self.horizontal_flip_prob = horizontal_flip_prob
+        self.rotation_degrees = rotation_degrees
 
-    return db_connector
+    def prepare_data(self) -> None:
+        if self.local_experiment:
+            logger.info(f"Downloading FashionMNIST data to {self.data_dir}.")
+            FashionMNIST(root=self.data_dir, train=True, download=True)
+            FashionMNIST(root=self.data_dir, train=False, download=True)
 
+    def setup(self, stage: str) -> None:
+        del stage  # Unused
 
-def get_train_test_data_loader(
-    db_connect: object,
-    batch_size: int = 4,
-    num_workers: int = 2,
-    local_dataset_path: Path = Path(__file__).parents[3].joinpath("data/cifar_dataset"),
-) -> tuple[DataLoader, DataLoader, list[str]]:
-    """
-    For the purpose of this exercice, this function is here to simulate a call to a database.
-    You can keep it like that but keep in mind in a real situation, here you would have the code for db communication.
-    """
-    _ = db_connect
+        logger.info("Setting up FashionMNIST train/val/test datasets.")
 
-    logger.info(f"Loading Dataset from {local_dataset_path}.")
+        train_transform = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+                transforms.RandomHorizontalFlip(p=self.horizontal_flip_prob),
+                transforms.RandomRotation(degrees=self.rotation_degrees),
+            ]
+        )
+        test_transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
 
-    def get_classes() -> list[str]:
-        logger.info(msg="Getting dataset classes.")
+        self.train_dataset = FashionMNIST(root=self.data_dir, train=True, download=False, transform=train_transform)
+        train_size = int(len(self.train_dataset) * self.train_val_split)
+        val_size = len(self.train_dataset) - train_size
 
-        return load_json(file_path=local_dataset_path.joinpath("metadata.json"))["classes"]
+        self.train_dataset, self.val_dataset = random_split(dataset=self.train_dataset, lengths=[train_size, val_size])
+        self.test_dataset = FashionMNIST(root=self.data_dir, train=False, download=False, transform=test_transform)
 
-    logger.info(msg=f"Creating Train DataLoader with batch_size={batch_size}, num_workers={num_workers}.")
-    transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+    def train_dataloader(self) -> DataLoader:
+        return DataLoader(
+            self.train_dataset,
+            batch_size=self.batch_size,
+            num_workers=self.num_workers,
+            prefetch_factor=self.prefetch_factor,
+            persistent_workers=True,
+            shuffle=True,
+        )
 
-    trainset = CIFAR10(root=local_dataset_path, train=True, download=True, transform=transform)
-    trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+    def val_dataloader(self) -> DataLoader:
+        return DataLoader(
+            self.val_dataset,
+            batch_size=self.batch_size,
+            num_workers=self.num_workers,
+            prefetch_factor=self.prefetch_factor,
+            persistent_workers=True,
+            shuffle=False,
+        )
 
-    logger.info(msg=f"Creating Test DataLoader with batch_size={batch_size}, num_workers={num_workers}.")
-    testset = CIFAR10(root=local_dataset_path, train=False, download=True, transform=transform)
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+    def test_dataloader(self) -> DataLoader:
+        return DataLoader(
+            self.test_dataset,
+            batch_size=self.batch_size,
+            num_workers=self.num_workers,
+            prefetch_factor=self.prefetch_factor,
+            persistent_workers=True,
+            shuffle=False,
+        )
 
-    return trainloader, testloader, get_classes()
+    def visualize_data(self, data_loader: DataLoader) -> None:
+        # Get a batch of images and labels
+        images, labels = next(iter(data_loader))
+
+        # Set up a 4x4 grid for the images
+        _, axes = plt.subplots(4, 4, figsize=(8, 8))
+
+        # Display 16 images
+        for i in range(16):
+            ax = axes[i // 4, i % 4]
+
+            # Convert the image from (C,H,W) to (H , W ,C)
+            img = images[i].permute(1, 2, 0)
+
+            ax.imshow(img, cmap="Greys_r")
+            ax.set_title(f"Label: {self.CLASSES[labels[i].item()]}")
+            ax.axis("off")
+
+        plt.show()
