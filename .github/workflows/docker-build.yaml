@@ -40,6 +40,7 @@ jobs:
             push: true
             tags: train:latest
             file: docker/Dockerfile
+            context: docker/
             target: train
             build-args: |
                 PYTHON_V="python3.10"
