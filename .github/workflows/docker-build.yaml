@@ -23,8 +23,9 @@ jobs:
             lfs: true
             fetch-depth: 0
             fetch-tags: true
-      - name: Build Docker image
+      - name: Prepare Docker Build Context and Install Build Requirements
         run: |
+            source scripts/install-requirements-build.sh
             source docker/configure.sh
             source docker/create_build_context.sh
       - name: Login to Azure Container Registry
