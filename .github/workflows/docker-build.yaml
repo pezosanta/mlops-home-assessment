@@ -2,15 +2,15 @@ name: Docker Build
 
 on: 
   push:
-    branches:
-    - master
+    # branches:
+    # - master
     
   workflow_dispatch:
-    inputs:
-      experiment_name:
-        description: Experiment name of the current training run.
-        type: string
-        required: true
+    # inputs:
+    #   experiment_name:
+    #     description: Experiment name of the current training run.
+    #     type: string
+    #     required: true
 
 jobs:
   build:
