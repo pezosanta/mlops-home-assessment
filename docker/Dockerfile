@@ -8,7 +8,8 @@ ENV PYTHON_VERSION=$PYTHON_V
 
 RUN apt-get update && \
     apt-get install -y --fix-broken --no-install-recommends \
-        $PYTHON_VERSION \
+        # $PYTHON_VERSION \
+        python3.10 \
         python3-distutils \
         python3-wheel \
         python3-pip && \
