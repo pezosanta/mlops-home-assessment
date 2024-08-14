@@ -1,0 +1,49 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+
+name: train
+display_name: Training
+description: Training the image classifier model
+
+inputs:
+  data_input:
+    type: uri_folder
+    mode: ro_mount
+  horizontal_flip_prob:
+    type: number
+  rotation_range:
+    type: integer
+  learning_rate:
+    type: number
+  batch_size:
+    type: integer
+  num_workers:
+    type: integer
+  prefetch_factor:
+    type: integer
+  num_epochs:
+    type: integer
+  dev_mode:
+    type: boolean
+
+outputs:
+  checkpoint_output:
+    type: uri_folder
+    mode: rw_mount
+
+environment: azureml:train-env@latest
+
+code: ../../../../../
+command: >-
+  pip install . &&
+  python src/image_classifier/modeling/train.py
+  --data_dir ${{inputs.data_input}}
+  --checkpoint_dir ${{outputs.checkpoint_output}}
+  --horizontal_flip_prob ${{inputs.horizontal_flip_prob}}
+  --rotation_degrees ${{inputs.rotation_range}}
+  --learning_rate ${{inputs.learning_rate}}
+  --batch_size ${{inputs.batch_size}}
+  --num_workers ${{inputs.num_workers}}
+  --prefetch_factor ${{inputs.prefetch_factor}}
+  --num_epochs ${{inputs.num_epochs}}
+  --dev_mode ${{inputs.dev_mode}}
