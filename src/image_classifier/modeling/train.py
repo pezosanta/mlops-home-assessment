@@ -1,6 +1,7 @@
 import argparse
 import json
 import logging
+import os
 from pathlib import Path
 
 import lightning as L
@@ -18,6 +19,14 @@ logger.setLevel(logging.INFO)
 
 
 def parse_args() -> argparse.Namespace:
+    def str2bool(v: str) -> bool:
+        if v.lower() in ("yes", "true", "t", "y", "1"):
+            return True
+        elif v.lower() in ("no", "false", "f", "n", "0"):
+            return False
+        else:
+            raise argparse.ArgumentTypeError("Boolean value expected.")
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", type=Path, help="Path to the input data folder.", required=True)
     parser.add_argument("--checkpoint_dir", type=Path, help="Path to the output checkpoint folder.", required=True)
@@ -34,7 +43,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--prefetch_factor", type=int, help="Number of batches loaded in advance by each worker.")
     parser.add_argument("--num_epochs", type=int, default=2, help="Number of epochs to train the model with.")
-    parser.add_argument("--dev_mode", type=bool, help="Run the training in development mode.")
+    parser.add_argument("--dev_mode", type=str2bool, help="Run the training in development mode.")
 
     known_args, unknown_args = parser.parse_known_args()
 
@@ -65,7 +74,11 @@ def train(
     L.seed_everything(seed=42)
 
     logger.info(msg="Initializing MLFlowLogger.")
-    mlflow_logger = MLFlowLogger(experiment_name="fashion_mnist_test_1", run_name="test_log_model")
+    mlflow_logger = MLFlowLogger(
+        tracking_uri=os.getenv("MLFLOW_TRACKING_URI"),
+        experiment_name=os.getenv("MLFLOW_EXPERIMENT_NAME"),
+        run_id=os.getenv("MLFLOW_RUN_ID"),
+    )
 
     logger.info(msg="Initializing Data Module.")
     dm = FashionMNISTDataModule(
