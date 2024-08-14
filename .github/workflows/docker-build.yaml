@@ -23,20 +23,26 @@ jobs:
             lfs: true
             fetch-depth: 0
             fetch-tags: true
-
+      - name: Build Docker image
+        run: |
+            source docker/configure.sh
+            source docker/create_build_context.sh
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v2
         with:
             login-server: ${{ secrets.ACR_SERVER }} # default: index.docker.io
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
-      - name: Build and Push to ACR
+      - name: Build and Push TRAIN image to ACR
         uses: docker/build-push-action@v6
         with:
             push: true
-            tags: test-image:latest
+            tags: train:$(version)
             file: docker/Dockerfile
             target: train
+            build-args: |
+                PYTHON_V=$(pythonVersion)
+
                 
 
     
