@@ -18,7 +18,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Create symlink to always use $PYTHON_VERSION
-RUN ln -s /usr/bin/$PYTHON_VERSION /usr/bin/python
+RUN ln -s /usr/bin/python3.10 /usr/bin/python
 
 
 FROM base AS train
