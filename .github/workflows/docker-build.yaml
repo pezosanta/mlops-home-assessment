@@ -30,6 +30,14 @@ jobs:
             login-server: ${{ secrets.ACR_SERVER }} # default: index.docker.io
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
+      - name: Build and Push to ACR
+        uses: docker/build-push-action@v6
+        with:
+            push: true
+            tags: test-image:latest
+            file: docker/Dockerfile
+            target: train
+                
 
     
     
