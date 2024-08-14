@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:22.04 AS base
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISTRIBUTION=ubuntu2204
@@ -19,9 +19,13 @@ RUN apt-get update && \
 # Create symlink to always use $PYTHON_VERSION
 RUN ln -s /usr/bin/$PYTHON_VERSION /usr/bin/python
 
-# Install prod dependencies
+
+FROM base AS train
+
+# Install train dependencies
+# Poetry is used to install the Python package when submitting a training job to Azure ML
 COPY requirements-train.txt *.whl /tmp/
 RUN python -m pip install pip -U && \
+    pip install poetry --no-cache-dir && \
     pip install -r /tmp/requirements-train.txt --no-cache-dir && \
-    pip install /tmp/*.whl --no-cache-dir && \
     rm /tmp/requirements-train.txt /tmp/*.whl 
