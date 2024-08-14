@@ -4,9 +4,18 @@
 # pycache
 *.pyc
 
-# data
-data/cifar_dataset/cifar-10-batches-py
+# local data
+.data
+
+# local checkpoints
+.checkpoints
 
 # packaging
 dist/
 *.egg-info
+
+# local lightning logs
+lightning_logs
+
+# local mlflow logs
+mlruns
