@@ -38,11 +38,11 @@ jobs:
         uses: docker/build-push-action@v6
         with:
             push: true
-            tags: train:$version
+            tags: train:latest
             file: docker/Dockerfile
             target: train
             build-args: |
-                PYTHON_V=$pythonVersion
+                PYTHON_V="python3.10"
 
                 
 
