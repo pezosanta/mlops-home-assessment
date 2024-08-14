@@ -16,7 +16,7 @@ exclude = [
     "src/image_classifier/utils/file_loaders.py"
 ]
 ignore_names = ["forward*"]
-min_confidence = 60
+min_confidence = 80
 paths = ["src/image_classifier"]
 sort_by_size = true
 
@@ -46,11 +46,11 @@ pyyaml = "*"
 
 # Packages that need to be installed for training besides 'main' packages
 [tool.poetry.group.train.dependencies]
-comet_ml = "*"
-matplotlib = "*"
+lightning = "*"
 torch = "*"
 torchvision = "*"
-tqdm = "*"
+matplotlib = "*"
+azureml-mlflow = "*"
 
 # Packages that need to be installed for production besides 'main' packages
 [tool.poetry.group.prod.dependencies]
@@ -59,6 +59,8 @@ onnxruntime = "*"
 
 # Packages that need to be installed for local development
 [tool.poetry.group.dev.dependencies]
+azure-ai-ml = "*"
+mlflow = "*"
 ipykernel = "*"
 
 # Packages that need to be installed for code quality checks / pre-commit hooks
